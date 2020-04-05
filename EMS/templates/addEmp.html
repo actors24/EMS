@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+        {% block title %}
+		<title>添加员工</title>
+        {% endblock %}
+	</head>
+
+	<body>
+	{% block body %}
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						添加员工信息:
+					</h1>
+					<form action="{% url 'manage:confirm_add' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+						<table cellpadding="0" cellspacing="0" border="0"
+							class="form_table">
+							<tr>
+								<td valign="middle" align="right">
+									姓名:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" name="name" />
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									工资:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" name="salary" />
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									年龄:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" name="age" />
+								</td>
+							</tr>
+                            <tr>
+                                <td  valign="middle" align="left">头像:</td>
+                                <td>
+                                    <input type="file" name="pic" />
+                                </td>
+                            </tr>
+						</table>
+						<p>
+							<input type="submit" class="button" value="确认添加" />
+						</p>
+					</form>
+				</div>
+{% endblock %}
+	</body>
+</html>

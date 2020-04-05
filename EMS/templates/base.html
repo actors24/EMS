@@ -1,0 +1,52 @@
+{% block static %}
+{% endblock %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>Title</title>
+    {% endblock %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css"
+			href="/static/css/style.css" />
+{% block css %}
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+</head>
+<body>
+		<div id="wrap">
+			<div id="top_content">
+					<div id="header">
+						<div id="rightheader">
+							<p id="time">
+								<br />
+							</p>
+						</div>
+						<div id="topheader">
+							<h1 id="title">
+								<a href="#">EMS</a>
+							</h1>
+                            <span style="float: right" id="time">
+                                <script type="text/javascript">
+                                    setInterval("document.getElementById('time').innerHTML = new Date().toLocaleString();",1000)
+                                </script>
+                            </span>
+						</div>
+						<div id="navigation">
+						</div>
+					</div>
+                {% block body %}
+
+                {% endblock %}
+			</div>
+			<div id="footer">
+				<div id="footer_bg">
+					actors1021@qq.com
+				</div>
+			</div>
+		</div>
+</body>
+</html>

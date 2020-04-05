@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block static %}
+    {% load static %}
+{% endblock %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    {% block title %}
+        <title>主页面</title>
+    {% endblock %}
+    {% block css %}
+        <style type="text/css">
+            .a {
+                width: 20px;
+                height: 20px;
+                border: 1px solid #e1e2e3;
+                cursor: pointer;
+                display: inline-block;
+                text-align: center;
+                line-height: 20px;
+            }
+
+            .b {
+                border: 0;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                display: inline-block;
+                text-align: center;
+                line-height: 20px;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        </style>
+    {% endblock %}
+    {% block js %}
+        <script type="text/javascript" src="/static/jquery/jquery-1.11.1-min.js"></script>
+        <script type="text/javascript">
+            function f1(id) {
+                let b = window.confirm('确认删除?');
+                if (b === true){
+                    if ("{{ page.object_list.count }}" === "1"){
+                        location.href = "{% url 'manage:delete' %}?num="+ "{{ page.number|add:-1 }}"+"&id="+id
+                    }else{
+                        location.href = "{% url 'manage:delete' %}?num="+"{{ page.number }}"+"&id="+id
+                }
+            }
+            }
+            function f2(id) {
+                location.href = "{% url 'manage:update' %}?num="+"{{ page.number }}"+"&id="+id
+            }
+            function f3() {
+                location.href = "{% url 'user:log_out' %}";
+            }
+        </script>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <div id="content">
+        <p id="whereami">
+        </p>
+        <h1>
+            欢迎!
+            <span>
+        <input type="button" name="log_out" class="button" value="注销 &raquo;" style="float: right" onclick="f3()"/>
+    </span>
+        </h1>
+        <table class="table">
+            <tr class="table_header">
+                <td>
+                    ID
+                </td>
+                <td>
+                    姓名
+                </td>
+                <td>
+                    工资
+                </td>
+                <td>
+                    年龄
+                </td>
+                <td>
+                    头像
+                </td>
+                <td>
+                    操作
+                </td>
+            </tr>
+            {% for i in page.object_list %}
+                <tr class="row1">
+                    <td id="pk">{{ i.id }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.salary }}</td>
+                    <td>{{ i.age }}</td>
+                    <td><img src="{% static i.pic.url %}" alt="" style="width: 80px;height: 80px;border-radius: 50%"></td>
+                    <td>
+                        <a href="javascript:void(0)" class="delete" id="delete" name="delete" onclick="f1({{ i.id }})">删除员工</a>&nbsp;<a
+                            href="javascript:void (0)" class="update" onclick="f2({{ i.id }})">更新员工</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div style="text-align: center" id="pagtor">
+            {% if page.has_previous %}
+                <a href="{% url 'manage:main' %}?num={{ page.previous_page_number }}">上一页</a>
+            {% endif %}
+
+            {% for foo in page.paginator.page_range %}
+                {% if page.number == foo %}
+                    <a class="b" type="page" href="{% url 'manage:main' %}?num={{ foo }}" name="page_now" disabled="">{{ foo }}</a>
+                {% else %}
+                    <a class="a" type="page" href="{% url 'manage:main' %}?num={{ foo }}">{{ foo }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page.has_next %}
+                <a href="{% url 'manage:main' %}?num={{ page.next_page_number }}">下一页</a>
+            {% endif %}
+        </div>
+        <p style="margin: 15px">
+            <input type="button" class="button" value="添加员工 &raquo;" onclick="location.href ='{% url 'manage:add' %}'"/>
+        </p>
+    </div>
+{% endblock %}
+</body>
+</html>

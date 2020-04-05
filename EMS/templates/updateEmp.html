@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block static %}
+    {% load static %}
+{% endblock %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+	<head>
+        {% block title%}
+		<title>更新员工信息</title>
+        {% endblock %}
+{% block js %}
+    <script type="text/javascript">
+    function f1() {
+        let a = document.getElementsByTagName('form')[0];
+        a.action = a.action + document.getElementById('pk').innerText;
+        if (confirm('确认更新?') === true){
+            document.forms[0].submit()
+        }
+    }
+    </script>
+    {% endblock %}
+	</head>
+
+	<body>
+    {% block body %}
+				<div id="content">
+					<p id="whereami">
+					</p>
+					<h1>
+						更新员工信息:
+					</h1>
+					<form action="{% url 'manage:confrim_update' %}?id=" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+						<table cellpadding="0" cellspacing="0" border="0"
+							class="form_table">
+							<tr>
+								<td valign="middle" align="right">
+									id:
+								</td>
+								<td valign="middle" align="left" id="pk">
+									{{ employee.0.pk }}
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									姓名:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" name="name" value="{{ employee.0.name }}"/>
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									工资:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" name="salary" value="{{ employee.0.salary }}"/>
+								</td>
+							</tr>
+							<tr>
+								<td valign="middle" align="right">
+									年龄:
+								</td>
+								<td valign="middle" align="left">
+									<input type="text" class="inputgri" name="age" value="{{ employee.0.age }}"/>
+								</td>
+							</tr>
+                            <tr>
+                               <td valign="middle" align="right">头像:</td>
+                                <td><img src="{% static employee.0.pic.url %}" alt="" style="width: 80px;height: 80px;border-radius: 50%">
+                                    <input type="file" name="pic" alt="{% static employee.0.pic.url %}"/></td>
+                            </tr>
+						</table>
+						<p>
+							<input type="button" class="button" value="确认更新" onclick="f1()"/>
+						</p>
+					</form>
+				</div>
+{% endblock %}
+	</body>
+</html>
